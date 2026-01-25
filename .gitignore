@@ -1,0 +1,106 @@
+# ==================== #
+# DEPENDÊNCIAS DO NODE #
+# ==================== #
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ====================== #
+# ARQUIVOS DE AMBIENTE #
+# ====================== #
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*.local
+
+# =========================== #
+# SISTEMA OPERACIONAL E IDE #
+# =========================== #
+# Linux/Ubuntu
+*.swp
+*.swo
+*~
+.directory
+.trash-*
+.Trash-*
+
+# macOS (caso outros devs usem)
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Windows (caso outros devs usem)
+desktop.ini
+Thumbs.db
+
+# VS Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.vscode/*.sublime-project
+.vscode/*.sublime-workspace
+
+# Outras IDEs
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ======================== #
+# ARQUIVOS DE BUILD/LOG #
+# ======================== #
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Cobertura de testes
+coverage/
+.nyc_output/
+
+# Produção
+build/
+dist/
+out/
+
+# Dependências temporárias
+.cache/
+.tmp/
+temp/
+
+# ========================== #
+# CONFIGURAÇÕES ESPECÍFICAS #
+# ========================== #
+# Arquivos de configuração local
+config/local.json
+config/local.yml
+config/local.js
+
+# Arquivos de sessão/autenticação
+*.session
+*.token
+*.key
+
+# ========================= #
+# ARQUIVOS DO SEU PROJETO #
+# ========================= #
+# Se você gerar algum diretório de build
+/assets/js/bundle.min.js
+/assets/css/style.min.css
+
+# Cache do navegador (se usar service workers)
+service-worker.js.map
