@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Moedas</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Aplicação web para conversão de moedas em tempo real.">
+    <meta name="author" content="Natalvides Neto">
+     <meta property="og:title" content="Conversor de Moedas">
+    <meta property="og:description" content="Converta moedas em tempo real.">
+    <meta property="og:type" content="website">
+    <!-- Colocar no fim do projeto
+    <meta property="og:url" content="https://seusite.com">
+    <meta property="og:image" content="https://seusite.com/assets/preview.png">
+    -->
+    <link rel="icon" href="./assets/icons/favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/icons/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/icons/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/icons/apple-touch-icon.png">
+    <link rel="manifest" href="./assets/icons/site.webmanifest">
+    <link rel="icon" type="image/png" sizes="192x192" href="./assets/icons/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="./assets/icons/android-chrome-512x512.png">
+    <meta name="theme-color" content="#0d6efd">
+    <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./node_modules/normalize.css/normalize.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark shadow">
+        <div class="container">
+            <span class="navbar-title">Conversor de Moedas</span>
+            <div class="navbar-text text-light">
+                <small id="current-date"></small>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-section bg-gradient">
+        <div class="container">
+            <div class="row align-items-center min-vh-50">
+                <div class="col-lg-6 text-white">
+                    <h1 class="display-4 fw-bold mb-4">
+                        Taxas de Câmbio em Tempo Real
+                    </h1>
+                    <p class="lead mb-0">
+                        Consulte as últimas taxas de câmbio de mais de 200 moedas, 
+                        incluindo criptomoedas e metais preciosos.
+                    </p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card shadow-lg border-0">
+                        <div class="card-body p-4">
+                            <h3 class="card-title text-center mb-4">Consultar Taxa de Câmbio</h3>
+                            
+                            <form id="conversion-form">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="from-currency" class="form-label">De:</label>
+                                        <select class="form-select" id="from-currency" required>
+                                            <option value="">Selecione a moeda...</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="to-currency" class="form-label">Para:</label>
+                                        <select class="form-select" id="to-currency" required>
+                                            <option value="">Selecione a moeda...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="row g-3 mt-2">
+                                    <div class="col-md-6">
+                                        <label for="amount" class="form-label">Valor:</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">$</span>
+                                            <input type="number" class="form-control" id="amount" 
+                                                   value="1" min="0" step="0.01" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="date" class="form-label">Data (opcional):</label>
+                                        <input type="date" class="form-control" id="date">
+                                    </div>
+                                </div>
+                                
+                                <div class="d-grid gap-2 mt-4">
+                                    <button type="submit" class="btn btn-primary btn-lg" id="convert-btn">
+                                        <span class="spinner-border spinner-border-sm me-2 d-none" 
+                                              id="loading-spinner"></span>
+                                        Converter
+                                    </button>
+                                </div>
+                            </form>
+                            
+                            <div id="result" class="mt-4 d-none">
+                                <div class="alert alert-success border-0">
+                                    <h5 class="alert-heading">Resultado da Conversão</h5>
+                                    <div id="conversion-result" class="fs-4 fw-bold text-center my-3"></div>
+                                    <div id="conversion-details" class="text-muted small"></div>
+                                    <div id="last-update" class="text-muted small mt-2"></div>
+                                </div>
+                            </div>
+
+                            <div id="error" class="alert alert-danger border-0 mt-4 d-none">
+                                <h6 class="alert-heading">Erro na Conversão</h6>
+                                <p id="error-message" class="mb-0"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="py-5" style="background:#020617;">
+        <div class="container">
+            <h2 class="text-center mb-5">Moedas Populares</h2>
+            <div class="row g-4" id="popular-currencies">
+                <!-- Cards serão preenchidos via JavaScript -->
+            </div>
+        </div>
+    </section>
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0">
+                        © <span id="year"></span> Natalvides Neto. Todos os direitos reservados.
+                    </p>
+                </div>
+
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">
+                        Desenvolvido por 
+                        <a href="https://natalvides-neto.netlify.app/" 
+                        class="text-white text-decoration-underline" 
+                        target="_blank">
+                            Natalvides Neto
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./js/main.js"></script>
+</body>
+</html>

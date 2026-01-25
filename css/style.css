@@ -1,0 +1,83 @@
+:root {
+    --pink: #ff4da6;
+    --blue: #3b82f6;
+    --dark: #0f172a;
+    --dark-soft: #1e293b;
+    --text-light: #e5e7eb;
+    --gradient-main: linear-gradient(135deg, #ff4da6 0%, #3b82f6 100%);
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: var(--dark);
+    color: var(--text-light);
+}
+
+.navbar {
+    background: #020617 !important;
+}
+
+.navbar-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.hero-section {
+    background: var(--gradient-main);
+    padding: 80px 0;
+}
+
+.card {
+    border-radius: 18px;
+    background: #020617;
+    color: var(--text-light);
+}
+
+.card-title {
+    color: #fff;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+}
+
+.form-control,
+.form-select {
+    background-color: #020617;
+    border: 1px solid #334155;
+    color: #fff;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--pink);
+    box-shadow: 0 0 0 0.2rem rgba(255, 77, 166, 0.25);
+}
+
+.btn-primary {
+    background: var(--gradient-main);
+    border: none;
+    border-radius: 50px;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+}
+
+.currency-card {
+    background: var(--dark-soft);
+    border-radius: 16px;
+    padding: 1.5rem;
+    color: #fff;
+}
+
+.currency-card:hover {
+    background: var(--gradient-main);
+}
+
+footer {
+    background: #020617;
+}
