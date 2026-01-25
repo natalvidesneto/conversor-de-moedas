@@ -93,7 +93,6 @@ class CurrencyConverter {
             const responseData = await this.fetchWithFallback(`currencies/${baseCurrency}.json`);
             console.log('Dados das moedas populares:', responseData);
             
-            // A estrutura da API é: { date: "2024-01-01", usd: { brl: 5.0, eur: 0.9, ... } }
             const rates = responseData[baseCurrency];
             
             if (!rates) {
@@ -109,7 +108,7 @@ class CurrencyConverter {
                     
                     htmlContent += `
                         <div class="col-md-4 col-lg-3">
-                            <div class="currency-card">
+                            <div class="currency-card" data-currency="${currency}">
                                 <div class="currency-code">${currency.toUpperCase()}</div>
                                 <div class="currency-name small mb-2">${currencyName}</div>
                                 <div class="currency-value">1 ${baseCurrency.toUpperCase()} = ${rate.toFixed(4)} ${currency.toUpperCase()}</div>
@@ -121,9 +120,81 @@ class CurrencyConverter {
             
             container.innerHTML = htmlContent || '<div class="col-12 text-center text-muted">Nenhuma moeda popular disponível</div>';
             
+            // Adicionar event listeners para os cards de moedas populares
+            this.setupPopularCurrencyListeners();
+            
         } catch (error) {
             console.error('Erro ao carregar moedas populares:', error);
             container.innerHTML = '<div class="col-12 text-center text-muted">Erro ao carregar moedas populares</div>';
+        }
+    }
+
+    // Configurar listeners para moedas populares
+    setupPopularCurrencyListeners() {
+        const currencyCards = document.querySelectorAll('.currency-card');
+        
+        currencyCards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                e.preventDefault(); // Prevenir comportamento padrão
+                e.stopPropagation(); // Parar propagação do evento
+                
+                const currencyCode = card.getAttribute('data-currency');
+                this.selectPopularCurrency(currencyCode);
+            });
+        });
+    }
+
+    // Selecionar moeda popular
+    selectPopularCurrency(currencyCode) {
+        console.log('Moeda popular selecionada:', currencyCode);
+        
+        const fromSelect = document.getElementById('from-currency');
+        const toSelect = document.getElementById('to-currency');
+        
+        // Alternar entre moedas: se uma já estiver selecionada, usar como "De"
+        if (fromSelect.value && fromSelect.value !== currencyCode) {
+            toSelect.value = currencyCode;
+        } else {
+            fromSelect.value = 'usd'; // USD como padrão para "De"
+            toSelect.value = currencyCode;
+        }
+        
+        // Focar no campo de valor
+        document.getElementById('amount').focus();
+        
+        // Opcional: fazer conversão automática
+        // this.performConversion();
+    }
+
+    // Nova função para executar conversão diretamente
+    async performConversion() {
+        const fromCurrency = document.getElementById('from-currency').value;
+        const toCurrency = document.getElementById('to-currency').value;
+        const amount = parseFloat(document.getElementById('amount').value);
+        
+        if (!fromCurrency || !toCurrency || isNaN(amount) || amount <= 0) {
+            return; // Validação básica
+        }
+        
+        try {
+            this.showLoadingState('Convertendo...');
+            
+            const responseData = await this.fetchWithFallback(`currencies/${fromCurrency}.json`);
+            const rates = responseData[fromCurrency];
+            
+            if (!rates || !rates[toCurrency]) {
+                throw new Error('Taxa de câmbio não disponível');
+            }
+            
+            const rate = rates[toCurrency];
+            const convertedAmount = amount * rate;
+            
+            this.displayResult(amount, fromCurrency, convertedAmount, toCurrency, rate, 'latest');
+            this.hideLoadingState();
+            
+        } catch (error) {
+            console.error('Erro na conversão automática:', error);
+            this.hideLoadingState();
         }
     }
 
@@ -331,5 +402,5 @@ document.addEventListener('DOMContentLoaded', () => {
     new CurrencyConverter();
 });
 
-//Atualização de Ano atomático
+// Atualização de Ano automático
 document.getElementById("year").textContent = new Date().getFullYear();

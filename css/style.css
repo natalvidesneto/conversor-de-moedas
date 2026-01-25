@@ -68,14 +68,34 @@ body {
 }
 
 .currency-card {
-    background: var(--dark-soft);
-    border-radius: 16px;
-    padding: 1.5rem;
-    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    height: 100%;
 }
 
 .currency-card:hover {
-    background: var(--gradient-main);
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.currency-code {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.currency-name {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.currency-value {
+    font-size: 1rem;
+    color: #4ade80;
 }
 
 footer {
